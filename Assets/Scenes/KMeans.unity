@@ -284,6 +284,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1378368536}
+  - component: {fileID: 1378368537}
   m_Layer: 0
   m_Name: KMeans
   m_TagString: Untagged
@@ -304,3 +305,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378368537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1378368535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9019af4be01102a4283b6a9883d697cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centroidPrefab: {fileID: 1031471519946542, guid: 95a1f4df6b5b4544e85aae100231a7f9,
+    type: 2}
+  dataPointPrefab: {fileID: 1777785783031894, guid: ca2ce952714d6344f82881c716ca9519,
+    type: 2}
+  numOfClusters: 3
+  classColors:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0.048275948, a: 0}
+  - {r: 0, g: 0.33793116, b: 1, a: 0}
