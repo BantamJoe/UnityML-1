@@ -88,61 +88,82 @@ public class KMeans {
         }
 
         FindClusters();
-        //UpdateCentroidPositions();
+    }
+
+    public void Next()
+    {
+        FindClusters();
+        UpdateCentroidPositions();
     }
 
     public void UpdateCentroidPositions()
     {
-        List<double[]> averagedVectors = new List<double[]>(numOfClusters);
-        List<int> totals = new List<int>();
+        int[] totals = new int[numOfClusters];
+        Matrix averagedVectors = new Matrix(Centroids.Dimension);
+
         for (int i = 0; i < numOfClusters; i++)
         {
             averagedVectors.Add(new double[Centroids.Dimension]);
-            totals.Add(0);
         }
+
         for(int i = 0; i < numOfClusters; i++)
         {
             for (int j = 0; j < Data.Count; j++)
             {
-                if (Clusters[i] == i)
+                if (Clusters[j] == i)
                 {
-                    for (int k = 0; k < Centroids.Dimension; k++)
-                    {
-                        averagedVectors[i][k] += Data[j][k];
-                        totals[i] += 1;
-                    }
+                    averagedVectors[i] = VectorSum(averagedVectors[i], Data[j]);
+                    totals[i] += 1;
                 }
             }
-            for (int k = 0; k < Centroids.Dimension; k++)
-            {
-                averagedVectors[i][k] /= totals[i];
-            }
-            Debug.Log(totals[i]);
+            double[] avg = ScaleVector(averagedVectors[i], (1.0f / totals[i]));
+            Centroids[i] = avg;
         }
+
+        Debug.Log(averagedVectors.ToString());
     }
 
-    public void UpdateCentroidPositionsOld()
+    public double[] ScaleVector(double[] vector, float scaler)
     {
-        double[,] averageVectors = new double[numOfClusters, Centroids.Dimension];
-        int[] totalClusterPoints = new int[numOfClusters];
+        double[] newVector = new double[vector.Length];
+        for (int i = 0; i < Centroids.Dimension; i++)
+        {
+            newVector[i] = vector[i] * scaler;
+        }
+        return newVector;
+    }
 
+    public Matrix SelectMatrix(int selection)
+    {
+        Matrix m = new Matrix(Data.Dimension);
         for (int i = 0; i < Data.Count; i++)
         {
-            totalClusterPoints[Clusters[i]] += 1;
-            for (int j = 0; j < Centroids.Dimension; j++) {
-                averageVectors[Clusters[i], j] += Data[i][j];
-            }
-        }
-
-        //average it out
-        for (int i = 0; i < numOfClusters; i++)
-        {
-            for (int j = 0; j < Centroids.Dimension; j++)
+            if (Clusters[i] == i)
             {
-                var a = averageVectors[Clusters[i], j] / totalClusterPoints[i];
-                Centroids[i][j] = a;
+                m.Add(Data[i]);
             }
         }
+        return m;
+    }
+
+    /// <summary>
+    /// Returns a double d
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
+    public double[] VectorSum(double[] a, double[] b)
+    {
+        if(a.Length != b.Length)
+        {
+            throw new Exception("[KMEANS]: You fucked up");
+        }
+        double[] d = new double[a.Length];
+        for (int i = 0; i < a.Length; i++)
+        {
+            d[i] = a[i] + b[i];
+        }
+        return d;
     }
 
     public void FindClusters()

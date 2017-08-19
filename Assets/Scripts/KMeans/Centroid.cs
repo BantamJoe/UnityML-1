@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
-
-public class Centroid : DataObject
+namespace UnityML
 {
-
+    public class Centroid : KMeansObject
+    {
+        public override void Awake()
+        {
+            DType = DataType.Centroid;
+        }
+    }
 }

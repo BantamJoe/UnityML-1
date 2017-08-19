@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 //TODO: check if list is jagged
 //TODO: implement Enumerator
-public class Matrix { 
+public class Matrix {
     List<double[]> _matrix;
     int dimension;
     double _min;
@@ -85,8 +85,8 @@ public class Matrix {
         MAX = currentMax;
         MIN = currentMin;
     }
-    
-    
+
+
     public int Dimension
     {
         get
@@ -99,7 +99,6 @@ public class Matrix {
             dimension = value;
         }
     }
-    
 
     public double[] this[int i]
     {
@@ -170,5 +169,19 @@ public class Matrix {
     {
         matrix.RemoveAt(value);
         changeInMatrix = true;
+    }
+
+    public override string ToString()
+    {
+        string s = "";
+        for(int i = 0; i < matrix.Count; i++)
+        {
+            for (int j = 0; j < Dimension; j++)
+            {
+                s += matrix[i][j].ToString() + ", ";
+            }
+            s += " ";
+        }
+        return s;
     }
 }
